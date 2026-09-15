@@ -1,0 +1,445 @@
+<title>CANFD-MC Adapter</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F3F4F1; --surface:#FFFFFF; --ink:#1B2227; --muted:#5B666D; --rule:#D3D8D5; --rule-soft:#E4E8E5;
+  --accent:#1D6B66; --accent-ink:#0F4C48; --accent-soft:#DDEEEC;
+  --warn:#9A6A12; --warn-soft:#F7ECD3; --bad:#A4331B; --bad-soft:#F6DFD8; --ok:#2E7143; --ok-soft:#DDEFE1;
+  --code-bg:#EAEDEA;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131A1D; --surface:#1B2327; --ink:#E4E9E7; --muted:#9AA6A9; --rule:#33403F; --rule-soft:#26312F;
+    --accent:#56B8AF; --accent-ink:#8FD8D0; --accent-soft:#1B3634;
+    --warn:#E0B25A; --warn-soft:#3A2F14; --bad:#F08E74; --bad-soft:#3F211A; --ok:#7CC98F; --ok-soft:#1B3524;
+    --code-bg:#242E31;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131A1D; --surface:#1B2327; --ink:#E4E9E7; --muted:#9AA6A9; --rule:#33403F; --rule-soft:#26312F;
+  --accent:#56B8AF; --accent-ink:#8FD8D0; --accent-soft:#1B3634;
+  --warn:#E0B25A; --warn-soft:#3A2F14; --bad:#F08E74; --bad-soft:#3F211A; --ok:#7CC98F; --ok-soft:#1B3524;
+  --code-bg:#242E31;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15.5px;line-height:1.55;padding-block:0 64px;padding-inline:20px}
+h1,h2,h3{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;font-weight:600;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:2.3rem;letter-spacing:-.01em}
+h2{font-size:1.45rem;margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
+h2 .num{color:var(--accent);font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:.95rem;margin-right:.6rem;vertical-align:.15em}
+h3{font-size:1.1rem;margin-top:1.8rem;color:var(--ink)}
+h3 .num{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:.85rem;margin-right:.5rem}
+p{margin:.7rem 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:1.3rem}
+li{margin:.3rem 0}
+code,kbd{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:3px}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto}
+.page{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px}
+@media (max-width:860px){.page{grid-template-columns:1fr;gap:0}.toc{position:static!important;border-right:0!important;border-bottom:1px solid var(--rule);padding:20px 0 1rem!important;margin-bottom:1rem;max-height:none!important}}
+.toc{position:sticky;top:0;align-self:start;padding:28px 12px 0 0;font-size:.84rem;border-right:1px solid var(--rule-soft);max-height:100vh;overflow:auto}
+.toc .eyebrow{margin-bottom:.6rem}
+.toc a{display:block;color:var(--muted);text-decoration:none;padding:.22rem 0;line-height:1.3}
+.toc a:hover{color:var(--ink)}
+.toc a span{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--accent);margin-right:.45rem}
+header.hero{padding-top:36px}
+.eyebrow{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.lede{font-size:1.05rem;color:var(--muted);max-width:62ch;margin-top:.8rem}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--rule);border-radius:4px;margin:1.6rem 0 .6rem;overflow:hidden;background:var(--surface)}
+.specs div{padding:.7rem .9rem;border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
+.specs dt{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.specs dd{margin:0;font-family:"IBM Plex Mono",monospace;font-size:.9rem;font-variant-numeric:tabular-nums}
+.note{font-size:.84rem;color:var(--muted)}
+.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.04em;padding:.12em .5em;border-radius:3px;vertical-align:middle;white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.callout{border-left:3px solid var(--accent);background:var(--surface);padding:.8rem 1rem;margin:1.2rem 0;max-width:72ch;border-radius:0 4px 4px 0}
+.callout.warn{border-left-color:var(--warn)}
+.callout p{margin:.3rem 0}
+.callout .t{font-weight:600;font-size:.9rem}
+.tbl{overflow-x:auto;margin:1rem 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{padding:.5rem .7rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule-soft)}
+th{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--bg);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.m,th.m{font-family:"IBM Plex Mono",monospace;font-size:.8rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.n{font-variant-numeric:tabular-nums}
+.grp td{background:var(--bg);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.diag{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:12px;margin:1rem 0;overflow-x:auto}
+.diag svg{display:block;width:100%;height:auto;max-width:860px;margin:0 auto;color:var(--ink)}
+.silk{font-family:"IBM Plex Mono",monospace;background:var(--ink);color:var(--bg);display:inline-block;padding:.6rem 1rem;border-radius:3px;letter-spacing:.04em;line-height:1.7}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:1rem 0}
+.calc div{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:.7rem .9rem;font-size:.86rem}
+.calc .k{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.calc .v{font-family:"IBM Plex Mono",monospace;font-size:1.02rem;margin:.15rem 0;font-variant-numeric:tabular-nums}
+.calc .f{color:var(--muted);font-size:.8rem;line-height:1.45}
+.check{list-style:none;padding:0;max-width:72ch}
+.check li{display:grid;grid-template-columns:18px 1fr;gap:.6rem;padding:.45rem 0;border-bottom:1px solid var(--rule-soft)}
+.check li .box{width:15px;height:15px;border:1.5px solid var(--muted);border-radius:3px;margin-top:.2rem}
+.src{font-size:.86rem}
+.src li{margin:.4rem 0}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-size:.8rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+<div class="wrap">
+<div class="page">
+<nav class="toc" aria-label="Contents">
+  <div class="eyebrow">Contents</div>
+  <a href="#s1"><span>1</span>Block diagram</a>
+  <a href="#s2"><span>2</span>Module choices</a>
+  <a href="#s3"><span>3</span>BOM</a>
+  <a href="#s4"><span>4</span>Net list</a>
+  <a href="#s4-3"><span>4.3</span>Oscillator 40 MHz</a>
+  <a href="#s4-4"><span>4.4</span>Termination</a>
+  <a href="#s4-5"><span>4.5</span>LM5164 calculated</a>
+  <a href="#s5"><span>5</span>Layout</a>
+  <a href="#s6"><span>6</span>Mechanical &amp; environment</a>
+  <a href="#s6-0"><span>6.0</span>Soldered wires</a>
+  <a href="#s6-1"><span>6.1</span>Silkscreen</a>
+  <a href="#s7"><span>7</span>Open points</a>
+  <a href="#s8"><span>8</span>Sources</a>
+  <a href="#s9"><span>9</span>Checklist before fab</a>
+  <a href="#s10"><span>10</span>KiCad project &amp; ordering</a>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">Design document · rev 1.0 · 2026-09-15 · board routed, DRC clean, ordered</div>
+  <h1>CANFD-MC Adapter</h1>
+  <p class="lede">A minimal board for the Indian Springfield bus: ESP32-S3-WROOM-1U + MCP2518FD, soldered wires, no USB connector, no isolation, no termination. The firmware from <code>Prinsessen/indian-thunderstroke-canbus</code> (environment <code>sniffer-t2can</code>) runs unchanged.</p>
+  <dl class="specs">
+    <div><dt>MCU module</dt><dd>ESP32-S3-WROOM-1U-N16R8</dd></div>
+    <div><dt>CAN controller</dt><dd>MCP2518FD · SPI · 40 MHz</dd></div>
+    <div><dt>Transceiver</dt><dd>TCAN332G · 3.3 V</dd></div>
+    <div><dt>Supply</dt><dd>6–40 V in · LM5164 → 3.3 V</dd></div>
+    <div><dt>Bus</dt><dd>J1939 · 250 kbit/s · classic</dd></div>
+    <div><dt>Board</dt><dd>55 × 32 mm · 4 layers</dd></div>
+  </dl>
+  <p class="note">Pin numbers were looked up in LilyGO's schematic <code>T-2Can-Fd_V1.0.pdf</code>, Espressif's WROOM-1 datasheet and TI SNVSAU4D — not from memory. The buck values in §4.5 were calculated from the datasheet equations and confirmed in WEBENCH.</p>
+</header>
+
+<h2 id="s1"><span class="num">1</span>Block diagram</h2>
+<div class="diag">
+<svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace" font-size="11" role="img" aria-label="Block diagram: VBAT through fuse, Schottky and TVS to the LM5164 buck, 3.3 V to ESP32-S3, MCP2518FD and TCAN332G, on through choke and TVS to the CANH/CANL pads">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+  <g fill="none" stroke="currentColor" stroke-width="1.2">
+    <rect x="20" y="30" width="90" height="46" rx="3" fill="var(--surface)"/>
+    <rect x="140" y="30" width="120" height="46" rx="3" fill="var(--surface)"/>
+    <rect x="290" y="30" width="110" height="46" rx="3" fill="var(--surface)"/>
+    <rect x="20" y="150" width="150" height="90" rx="3" fill="var(--surface)"/>
+    <rect x="240" y="150" width="140" height="90" rx="3" fill="var(--surface)"/>
+    <rect x="450" y="150" width="130" height="90" rx="3" fill="var(--surface)"/>
+    <rect x="650" y="150" width="120" height="90" rx="3" fill="var(--surface)"/>
+    <path d="M110 53H140" marker-end="url(#ah)"/>
+    <path d="M260 53H290" marker-end="url(#ah)"/>
+    <path d="M400 53H515 V150" marker-end="url(#ah)"/>
+    <path d="M345 76 V100 H310 V150" marker-end="url(#ah)"/>
+    <path d="M345 100 H95 V150" marker-end="url(#ah)"/>
+    <path d="M170 185H240" marker-end="url(#ah)"/><path d="M240 205H170" marker-end="url(#ah)"/>
+    <path d="M380 185H450" marker-end="url(#ah)"/><path d="M450 205H380" marker-end="url(#ah)"/>
+    <path d="M580 185H650" marker-end="url(#ah)"/><path d="M650 205H580" marker-end="url(#ah)"/>
+    <path d="M770 195H820" stroke-dasharray="3 3"/>
+    <path d="M95 240V265" stroke-dasharray="3 3"/>
+  </g>
+  <g fill="currentColor">
+    <text x="65" y="49" text-anchor="middle" font-weight="500">P1 VBAT</text>
+    <text x="65" y="64" text-anchor="middle" fill="var(--muted)">6–40 V</text>
+    <text x="200" y="49" text-anchor="middle" font-weight="500">F1 · D1 · D2</text>
+    <text x="200" y="64" text-anchor="middle" fill="var(--muted)">fuse · Schottky · TVS</text>
+    <text x="345" y="49" text-anchor="middle" font-weight="500">U3 LM5164</text>
+    <text x="345" y="64" text-anchor="middle" fill="var(--muted)">buck 3.3 V · 300 kHz</text>
+    <text x="440" y="96" fill="var(--muted)">3V3 to U1 · U2 · U4</text>
+    <text x="95" y="180" text-anchor="middle" font-weight="500">U1 ESP32-S3</text>
+    <text x="95" y="196" text-anchor="middle" fill="var(--muted)">WROOM-1U-N16R8</text>
+    <text x="95" y="212" text-anchor="middle" fill="var(--muted)">WiFi · BLE · OTA</text>
+    <text x="95" y="228" text-anchor="middle" fill="var(--muted)">U.FL antenna</text>
+    <text x="205" y="178" text-anchor="middle" fill="var(--accent)">SPI 12/11/13</text>
+    <text x="205" y="222" text-anchor="middle" fill="var(--accent)">CS 10 · INT 8</text>
+    <text x="310" y="180" text-anchor="middle" font-weight="500">U2 MCP2518FD</text>
+    <text x="310" y="196" text-anchor="middle" fill="var(--muted)">CAN FD controller</text>
+    <text x="310" y="212" text-anchor="middle" fill="var(--muted)">X1 40 MHz crystal</text>
+    <text x="310" y="228" text-anchor="middle" fill="var(--muted)">Normal20B / ListenOnly</text>
+    <text x="415" y="178" text-anchor="middle" fill="var(--accent)">TXCAN</text>
+    <text x="415" y="222" text-anchor="middle" fill="var(--accent)">RXCAN</text>
+    <text x="515" y="180" text-anchor="middle" font-weight="500">U4 TCAN332G</text>
+    <text x="515" y="196" text-anchor="middle" fill="var(--muted)">3.3 V transceiver</text>
+    <text x="515" y="212" text-anchor="middle" fill="var(--muted)">SOIC-8</text>
+    <text x="615" y="178" text-anchor="middle" fill="var(--accent)">CANH</text>
+    <text x="615" y="222" text-anchor="middle" fill="var(--accent)">CANL</text>
+    <text x="710" y="180" text-anchor="middle" font-weight="500">L1 · D3 · RT</text>
+    <text x="710" y="196" text-anchor="middle" fill="var(--muted)">CM choke · TVS</text>
+    <text x="710" y="212" text-anchor="middle" fill="var(--bad)">RT not populated</text>
+    <text x="710" y="228" text-anchor="middle" fill="var(--muted)">P3 CANH · P4 CANL</text>
+    <text x="825" y="199" fill="var(--muted)">bus</text>
+    <text x="20" y="282" fill="var(--muted)">TP1–TP7 flash pads (USB D±, IO0, EN, UART0)</text>
+    <text x="400" y="282" fill="var(--muted)">P2 GND shared by supply and bus</text>
+  </g>
+</svg>
+</div>
+<p>One ground throughout. Supply and bus come from the same service connector on the bike, so LilyGO's isolated TD501MCANFD module (and its internal DC/DC, which was three quarters of the 17 mA sleep current) is gone. The only parts that are genuinely redrawn compared with LilyGO are the power supply and the bus front end; the MCP2518FD section is a 1:1 copy.</p>
+
+<h2 id="s2"><span class="num">2</span>Module choices</h2>
+<p><strong>ESP32-S3-WROOM-1U-N16R8</strong> — the same module as the T-2CANFD, so <code>platformio.ini</code> (<code>esp32-s3-devkitc-1</code>, 16 MB flash / 8 MB OPI PSRAM) and the partition table are untouched. The module has a U.FL connector instead of a PCB antenna, which is the right choice on a motorcycle anyway.</p>
+<div class="callout warn">
+  <p class="t">Temperature: the N16R8 is only rated −40…+65 °C ambient</p>
+  <p>The 8 MB octal PSRAM is the limit. Under a seat in the sun, 65 °C is not much margin. Alternatives, both rated to +85 °C: <strong>N16R2</strong> (2 MB quad PSRAM — requires changing the PSRAM type in the board config from OPI to QSPI) or <strong>N16</strong> (no PSRAM — only if the firmware does not use it). Recommendation: build rev 1.0 with the N16R8 and measure the temperature at the actual mounting spot on a hot day. The footprint is identical for all three, so the change is an assembly decision.</p>
+</div>
+<p><strong>MCP2518FD</strong> in SOIC-14, 3.3 V, 40 MHz crystal — exactly as LilyGO. The firmware runs the controller in <code>Normal20B</code> (classic CAN + 29-bit IDs) or <code>ListenOnly</code>; CAN FD is not used, but the chip is the one the code and ACAN2517FD know.</p>
+<p><strong>TCAN332G</strong> — 3.3 V transceiver, SOIC-8, −40…+125 °C, no extra pins to wire. Listen-only is handled in the MCP2518FD, so the transceiver's silent pin (TCAN337G) is unnecessary. Drop-in alternatives with the same base pinout: TCAN337G, SN65HVD230.</p>
+<p><strong>LM5164</strong> — 100 V, 1 A synchronous buck with ~10 µA quiescent current. Survives load dump with the TVS as the only protection, and the quiescent current matters when the board hangs permanently on the battery.</p>
+
+<h2 id="s3"><span class="num">3</span>BOM</h2>
+<p>All passives SMD 0603 unless stated. Capacitors X7R (C0G where stated), −55…+125 °C. No electrolytics. LCSC numbers are the parts JLCPCB had in stock on 2026-09-15.</p>
+<div class="tbl"><table>
+<thead><tr><th class="m">Ref</th><th>Part</th><th>Value / type</th><th>Package</th><th>LCSC</th><th>Note</th></tr></thead>
+<tbody>
+<tr class="grp"><td colspan="6">Active</td></tr>
+<tr><td class="m">U1</td><td>ESP32-S3-WROOM-1U-N16R8</td><td>16 MB / 8 MB OPI</td><td>Module 18 × 19.2 mm</td><td class="m">C3013946</td><td>See §2 on temperature</td></tr>
+<tr><td class="m">U2</td><td>MCP2518FDT-E/SL</td><td>CAN FD controller</td><td>SOIC-14</td><td class="m">C626758</td><td>As LilyGO</td></tr>
+<tr><td class="m">U3</td><td>LM5164DDAR</td><td>100 V / 1 A buck</td><td>SO PowerPAD-8</td><td class="m">C477928</td><td>EP to GND plane</td></tr>
+<tr><td class="m">U4</td><td>TCAN332GDR</td><td>3.3 V CAN transceiver</td><td>SOIC-8</td><td class="m">C191010</td><td>Pins 5 and 8 NC</td></tr>
+<tr class="grp"><td colspan="6">Oscillator</td></tr>
+<tr><td class="m">X1</td><td>Crystal YXC X322540MPB4SI</td><td>40.000 MHz ±10 ppm · CL 15 pF</td><td>3225</td><td class="m">C9010</td><td>−40…+85 °C — the module is the limit anyway. See §4.3</td></tr>
+<tr><td class="m">C10, C11</td><td>Load capacitors</td><td>22 pF C0G</td><td>0603</td><td class="m">C1653</td><td>2·(15 − 3) pF. LilyGO uses 12 pF for a ~10 pF crystal — <em>not</em> the same crystal</td></tr>
+<tr class="grp"><td colspan="6">Supply — input</td></tr>
+<tr><td class="m">P1, P2</td><td>Solder pad VBAT / GND</td><td>Ø2.0 mm plated</td><td>—</td><td class="m">—</td><td>+ strain-relief hole, §6.0</td></tr>
+<tr><td class="m">F1</td><td>Fuse 1 A slow</td><td>63 V</td><td>1206</td><td class="m">C151135</td><td>Littelfuse 0466001.NRHF</td></tr>
+<tr><td class="m">D1</td><td>Schottky, series (reverse polarity)</td><td>SS36 · 60 V / 3 A</td><td>SMA</td><td class="m">C16015</td><td>~0.35 V drop, ~40 mW at 100 mA</td></tr>
+<tr><td class="m">D2</td><td>TVS, bidirectional</td><td>SMBJ24CA</td><td>SMB</td><td class="m">C83268</td><td>After D1. Clamps load dump &lt; 40 V. Bidirectional = cannot be placed backwards</td></tr>
+<tr><td class="m">C1, C2</td><td>Input capacitor</td><td>4.7 µF 100 V X7S</td><td>1210</td><td class="m">C385986</td><td>As close as possible to U3 VIN/GND</td></tr>
+<tr class="grp"><td colspan="6">Supply — LM5164 (calculated in §4.5)</td></tr>
+<tr><td class="m">L2</td><td>Inductor, shielded</td><td>22 µH · Changjiang FNR5040S220MT</td><td>5 × 5 × 4 mm</td><td class="m">C167971</td><td>Isat ~1.7 A — plenty for a real load &lt; 0.5 A</td></tr>
+<tr><td class="m">C3, C4</td><td>Output capacitor</td><td>22 µF 25 V X5R</td><td>0805</td><td class="m">C45783</td><td></td></tr>
+<tr><td class="m">C5</td><td>Bootstrap</td><td>2.2 nF 50 V X7R</td><td>0603</td><td class="m">C1604</td><td>Datasheet requirement</td></tr>
+<tr><td class="m">R1</td><td>RRON</td><td>27.4 kΩ 1 %</td><td>0603</td><td class="m">C22964</td><td>→ 300 kHz</td></tr>
+<tr><td class="m">R2</td><td>RFB1 (VOUT → FB)</td><td>100 kΩ 1 %</td><td>0603</td><td class="m">C25803</td><td></td></tr>
+<tr><td class="m">R3</td><td>RFB2 (FB → GND)</td><td>57.6 kΩ 1 %</td><td>0603</td><td class="m">C23082</td><td>→ 3.28 V</td></tr>
+<tr><td class="m">R4</td><td>RA (SW → CA)</td><td>150 kΩ</td><td>0603</td><td class="m">C22807</td><td>Type-3 ripple injection</td></tr>
+<tr><td class="m">C6</td><td>CA</td><td>2.2 nF X7R</td><td>0603</td><td class="m">C1604</td><td>Type-3 ripple injection</td></tr>
+<tr><td class="m">C7</td><td>CB</td><td>270 pF C0G</td><td>0603</td><td class="m">C1657</td><td>Type-3 ripple injection</td></tr>
+<tr><td class="m">R5</td><td>RUV1 (VIN → EN)</td><td>365 kΩ 1 %</td><td>0603</td><td class="m">C23031</td><td>UVLO on 7.0 V / off 6.5 V</td></tr>
+<tr><td class="m">R6</td><td>RUV2 (EN → GND)</td><td>100 kΩ 1 %</td><td>0603</td><td class="m">C25803</td><td></td></tr>
+<tr class="grp"><td colspan="6">Decoupling 3V3</td></tr>
+<tr><td class="m">C12, C13</td><td>ESP32 bulk</td><td>22 µF 25 V X5R</td><td>0805</td><td class="m">C45783</td><td>At U1 pin 2 — as LilyGO C4/C5</td></tr>
+<tr><td class="m">C14</td><td>ESP32 HF</td><td>100 nF</td><td>0603</td><td class="m">C14663</td><td>At U1 pin 2</td></tr>
+<tr><td class="m">C15, C16</td><td>MCP2518FD</td><td>10 µF + 100 nF</td><td>0603</td><td class="m">C19702 · C14663</td><td>At U2 pin 14 — as LilyGO C13/C12</td></tr>
+<tr><td class="m">C17, C18</td><td>TCAN332G</td><td>4.7 µF + 100 nF</td><td>0603</td><td class="m">C19666 · C14663</td><td>At U4 pin 3</td></tr>
+<tr><td class="m">C19</td><td>EN delay</td><td>1 µF</td><td>0603</td><td class="m">C15849</td><td>U1 EN → GND (LilyGO C8)</td></tr>
+<tr><td class="m">R7, R8, R9</td><td>Pull-up EN · IO0 · INT</td><td>10 kΩ</td><td>0603</td><td class="m">C25804</td><td>To 3V3</td></tr>
+<tr class="grp"><td colspan="6">Bus front end</td></tr>
+<tr><td class="m">P3, P4</td><td>Solder pad CANH / CANL</td><td>Ø1.5 mm plated</td><td>—</td><td class="m">—</td><td>+ strain-relief hole, §6.0</td></tr>
+<tr><td class="m">L1</td><td>Common-mode choke, CAN</td><td>Murata DLW43SH101XK2L</td><td>4532</td><td class="m">C123085</td><td>AEC-Q200. Pins 1/4 at one end, 2/3 at the other — project footprint. Does not tolerate hard potting (§6)</td></tr>
+<tr><td class="m">D3</td><td>TVS, CAN</td><td>Nexperia PESD2CAN</td><td>SOT-23</td><td class="m">C75176</td><td>Pins 1/2 to CANH/CANL, pin 3 GND — on the bus side of L1</td></tr>
+<tr><td class="m">RT1, RT2</td><td>Split termination</td><td>60.4 Ω</td><td>0805</td><td class="m">—</td><td><span class="chip bad">DO NOT POPULATE</span> §4.4</td></tr>
+<tr><td class="m">CT1</td><td>Split termination, centre</td><td>4.7 nF</td><td>0603</td><td class="m">—</td><td><span class="chip bad">DO NOT POPULATE</span> §4.4</td></tr>
+<tr class="grp"><td colspan="6">Test / flash</td></tr>
+<tr><td class="m">TP1–TP7</td><td>Pogo pads Ø1.5 mm, 2.54 mm pitch, back side</td><td>GND · EN · TX · RX · IO0 · USB D+ · USB D−</td><td>—</td><td class="m">—</td><td>Nothing mounted. First flash only; OTA after that</td></tr>
+</tbody></table></div>
+
+<h2 id="s4"><span class="num">4</span>Net list</h2>
+<h3><span class="num">4.1</span>ESP32-S3-WROOM-1U — pins used</h3>
+<p>Numbering per Espressif's WROOM-1/1U datasheet; confirmed against LilyGO's symbol. All other pins are NC.</p>
+<div class="tbl"><table>
+<thead><tr><th class="m">Pin</th><th class="m">Name</th><th class="m">Net</th><th>Connects to</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td class="m">1, 40, 41</td><td class="m">GND, GND, EP</td><td class="m">GND</td><td>GND plane</td><td>EP: via array</td></tr>
+<tr><td class="m">2</td><td class="m">3V3</td><td class="m">3V3</td><td>C12, C13, C14</td><td></td></tr>
+<tr><td class="m">3</td><td class="m">EN</td><td class="m">ESP_EN</td><td>R7 10k → 3V3, C19 1 µF → GND, TP5</td><td></td></tr>
+<tr><td class="m">27</td><td class="m">IO0</td><td class="m">IO0</td><td>R8 10k → 3V3, TP4</td><td>Boot strap</td></tr>
+<tr><td class="m">12</td><td class="m">IO8</td><td class="m">MCP_INT</td><td>U2 pin 4, R9 10k → 3V3</td><td>RTC GPIO → ext0 wake in <code>sleep.cpp</code></td></tr>
+<tr><td class="m">18</td><td class="m">IO10</td><td class="m">SPI_CS</td><td>U2 pin 13</td><td><code>MCP_CS</code></td></tr>
+<tr><td class="m">19</td><td class="m">IO11</td><td class="m">SPI_MOSI</td><td>U2 pin 11 (SDI)</td><td><code>MCP_MOSI</code></td></tr>
+<tr><td class="m">20</td><td class="m">IO12</td><td class="m">SPI_SCLK</td><td>U2 pin 10 (SCK)</td><td><code>MCP_SCK</code></td></tr>
+<tr><td class="m">21</td><td class="m">IO13</td><td class="m">SPI_MISO</td><td>U2 pin 12 (SDO)</td><td><code>MCP_MISO</code></td></tr>
+<tr><td class="m">17</td><td class="m">IO9</td><td class="m">MCP_INT0</td><td>U2 pin 9</td><td>As LilyGO. Controller output — the ESP must never drive it</td></tr>
+<tr><td class="m">15</td><td class="m">IO3</td><td class="m">MCP_INT1</td><td>U2 pin 8</td><td>As LilyGO. Same rule</td></tr>
+<tr><td class="m">13</td><td class="m">IO19</td><td class="m">USB_DN</td><td>TP2</td><td>Native USB-Serial/JTAG — matches <code>ARDUINO_USB_CDC_ON_BOOT=1</code></td></tr>
+<tr><td class="m">14</td><td class="m">IO20</td><td class="m">USB_DP</td><td>TP3</td><td></td></tr>
+<tr><td class="m">37</td><td class="m">TXD0</td><td class="m">UART_TX</td><td>TP6</td><td>Backup flash path</td></tr>
+<tr><td class="m">36</td><td class="m">RXD0</td><td class="m">UART_RX</td><td>TP7</td><td></td></tr>
+<tr><td class="m">28, 29, 30</td><td class="m">IO35, IO36, IO37</td><td class="m">—</td><td>NC</td><td>Used internally by the OPI PSRAM — must not be used</td></tr>
+<tr><td class="m">26, 16</td><td class="m">IO45, IO46</td><td class="m">—</td><td>NC</td><td>Strap pins; internal pull-downs</td></tr>
+</tbody></table></div>
+
+<h3><span class="num">4.2</span>MCP2518FD (SOIC-14) and TCAN332G (SOIC-8)</h3>
+<div class="tbl"><table>
+<thead><tr><th class="m">U2 pin</th><th class="m">Name</th><th>Net / connection</th></tr></thead>
+<tbody>
+<tr><td class="m">1</td><td class="m">TXCAN</td><td>→ U4 pin 1 (TXD)</td></tr>
+<tr><td class="m">2</td><td class="m">RXCAN</td><td>← U4 pin 4 (RXD)</td></tr>
+<tr><td class="m">3</td><td class="m">CLKO/SOF</td><td>NC</td></tr>
+<tr><td class="m">4</td><td class="m">INT#</td><td>MCP_INT → U1 IO8, R9 pull-up</td></tr>
+<tr><td class="m">5</td><td class="m">OSC2</td><td>X1 + C11 22 pF → GND</td></tr>
+<tr><td class="m">6</td><td class="m">OSC1</td><td>X1 + C10 22 pF → GND</td></tr>
+<tr><td class="m">7</td><td class="m">VSS</td><td>GND</td></tr>
+<tr><td class="m">8</td><td class="m">INT1#/GPIO1</td><td>MCP_INT1 → U1 IO3</td></tr>
+<tr><td class="m">9</td><td class="m">INT0#/GPIO0/XSTBY</td><td>MCP_INT0 → U1 IO9</td></tr>
+<tr><td class="m">10</td><td class="m">SCK</td><td>SPI_SCLK ← U1 IO12</td></tr>
+<tr><td class="m">11</td><td class="m">SDI</td><td>SPI_MOSI ← U1 IO11</td></tr>
+<tr><td class="m">12</td><td class="m">SDO</td><td>SPI_MISO → U1 IO13</td></tr>
+<tr><td class="m">13</td><td class="m">nCS</td><td>SPI_CS ← U1 IO10</td></tr>
+<tr><td class="m">14</td><td class="m">VDD</td><td>3V3 + C15 10 µF + C16 100 nF</td></tr>
+</tbody></table></div>
+<div class="tbl"><table>
+<thead><tr><th class="m">U4 pin</th><th class="m">Name</th><th>Net / connection</th></tr></thead>
+<tbody>
+<tr><td class="m">1</td><td class="m">TXD</td><td>← U2 pin 1</td></tr>
+<tr><td class="m">2</td><td class="m">GND</td><td>GND</td></tr>
+<tr><td class="m">3</td><td class="m">VCC</td><td>3V3 + C17 4.7 µF + C18 100 nF</td></tr>
+<tr><td class="m">4</td><td class="m">RXD</td><td>→ U2 pin 2</td></tr>
+<tr><td class="m">5</td><td class="m">NC</td><td>— (FAULT on the TCAN337G)</td></tr>
+<tr><td class="m">6</td><td class="m">CANL</td><td>→ L1 → D3 → RT2 (DNP) → P4</td></tr>
+<tr><td class="m">7</td><td class="m">CANH</td><td>→ L1 → D3 → RT1 (DNP) → P3</td></tr>
+<tr><td class="m">8</td><td class="m">NC</td><td>— (S on the TCAN337G; tie to GND if a 337G is fitted)</td></tr>
+</tbody></table></div>
+<p>No RESET line: the MCP2518FD has no reset pin, and ACAN2517FD resets it over SPI in <code>begin()</code>. IO9/IO3 are the controller's outputs — that is exactly the contention <code>can_hal_mcp.cpp</code> warns about, so they are wired as on LilyGO and never touched in firmware.</p>
+
+<h3 id="s4-3"><span class="num">4.3</span>Oscillator: 40 MHz crystal — settled by your own firmware</h3>
+<ul>
+  <li><strong>40 MHz, not 20.</strong> <code>can_hal_mcp.cpp</code> sets <code>MCP_OSC_HZ 40000000UL</code> and <code>ACAN2517FDSettings::OSC_40MHz</code>. ACAN2517FD derives its bit timing from that frequency; had the crystal been 20 MHz, 250 kbit/s would have been configured as 125, and you would read zero frames. You read frames (live J1939 from the Zealand ride, version 2026.09.14-x). Running firmware beats vendor examples.</li>
+  <li><strong>LilyGO's own can example is a trap.</strong> It calls <code>begin()</code> without a clock argument, and Longan_CANFD defaults to 20 MHz — so the example cannot work on their own board. LilyGO's wiki itself notes that it "requires CAN FD adaptation".</li>
+  <li><strong>It is a crystal, not an oscillator module.</strong> LilyGO's schematic shows X1 "40MHZ ±10ppm" on OSC1/OSC2 with C16/C17 = 12 pF; the MCP2518FD's internal Pierce oscillator drives it. Cheaper and more vibration-tolerant than an active module. LilyGO's 2 × 12 pF suit a crystal with CL ≈ 9–10 pF; the crystal JLCPCB stocks (X322540MPB4SI) has CL = 15 pF, so here C10/C11 = 22 pF: C = 2·(CL − C<sub>stray</sub>) = 2·(15 − 3).</li>
+</ul>
+<div class="callout">
+  <p class="t">Small correction for your repo</p>
+  <p>The comment in <code>can_hal_mcp.cpp</code> line 17 says "Longan_CANFD + ACAN2517FD both assume 40 MHz here". That is only true of ACAN2517FD — Longan defaults to 20. The conclusion is right; the premise can send the next reader the wrong way.</p>
+</div>
+
+<h3 id="s4-4"><span class="num">4.4</span>Termination: DO NOT POPULATE</h3>
+<p>The bike's bus already has its 2 × 120 Ω, and the board sits on a stub. A third termination would pull the bus down to 40 Ω and cause reflections. RT1/RT2/CT1 stay as empty footprints marked <strong>BENCH ONLY</strong> on the silkscreen — they exist only for the day the board sits on the bench against a USB-CAN adapter without a real bus, when both ends need terminating.</p>
+<p><strong>What you actually need to watch is the stub length.</strong> At 250 kbit/s you have about a metre from the tap point to the board before reflections start to cost. Keep it short, and keep the twist of the CAN pair right up to P3/P4.</p>
+
+<h3 id="s4-5"><span class="num">4.5</span>LM5164 — calculated values <span class="chip ok">CONFIRMED IN WEBENCH</span></h3>
+<p>Calculated from TI SNVSAU4D (rev. Feb 2026), section 7.2.2 and table 6-1. Assumptions: VOUT = 3.3 V, VIN nominal 13.8 V, VIN 6–40 V, IOUT dimensioned for 1 A (actual &lt; 0.5 A — WiFi TX bursts dominate).</p>
+<div class="calc">
+  <div><div class="k">Switching frequency</div><div class="v">300 kHz → RRON = 27.4 kΩ</div><div class="f">RRON [kΩ] = VOUT · 2500 / FSW [kHz] = 3.3·2500/300 = 27.5 (eq. 15). The 50 ns minimum on-time gives VIN,max = 3.3/(50 ns·300 kHz) = 220 V — no constraint.</div></div>
+  <div><div class="k">Inductor</div><div class="v">22 µH</div><div class="f">L = VOUT/(FSW·ΔIL)·(1−VOUT/VIN) with ΔIL = 0.4 A at 13.8 V → 20.9 µH (eq. 20). At 40 V: ΔIL = 0.46 A. Ipeak ≈ 1.2 A at 1 A load → Isat ≥ 1.5 A.</div></div>
+  <div><div class="k">Output capacitor</div><div class="v">2 × 22 µF</div><div class="f">COUT ≥ ΔIL/(8·FSW·ΔVOUT) = 0.4/(8·300k·16.5 mV) ≈ 10 µF (eq. 21). Doubled for DC-bias derating.</div></div>
+  <div><div class="k">Feedback divider</div><div class="v">RFB1 100 kΩ · RFB2 57.6 kΩ</div><div class="f">RFB2 = 1.2 V/(VOUT−1.2 V)·RFB1 = 57.1 kΩ (eq. 10). E96: 57.6 kΩ → VOUT = 1.2·(1+100/57.6) = 3.283 V.</div></div>
+  <div><div class="k">Ripple injection, type 3</div><div class="v">RA 150 kΩ · CA 2.2 nF · CB 270 pF</div><div class="f">CA ≥ 10/(FSW·RFB1∥RFB2) = 0.91 nF (eq. 24). RA·CA ≤ tON·(VIN−VOUT)/20 mV; tON = 797 ns at 13.8 V → gives 25 mV at 13.8 V, 15 mV at 6 V (min. 12 mV ✓), 31 mV at 40 V. CB ≥ 75 µs/(3·RFB1) = 250 pF (eq. 26), C0G.</div></div>
+  <div><div class="k">UVLO</div><div class="v">RUV1 365 kΩ · RUV2 100 kΩ</div><div class="f">VIN,on = 1.5·(1+RUV1/RUV2) = 6.98 V; VIN,off = 1.4·(1+…) = 6.51 V (eq. 13/14). Below 6 V the LM5164 is out of spec anyway. During a cranking dip the board restarts — the wake path is already robust to that.</div></div>
+  <div><div class="k">Input</div><div class="v">2 × 4.7 µF 100 V + CBST 2.2 nF</div><div class="f">Datasheet: ≥ 2.2 µF HF ceramic, voltage rating ≥ 2 × VIN,max. The battery leads are &gt; 5 cm, so D2 + ceramics sit right at U3.</div></div>
+  <div><div class="k">Sleep current, expected</div><div class="v">≈ 7–9 mA from 12 V</div><div class="f">MCP2518FD in Normal (~10–20 mA) + TCAN332G recessive (~6 mA) at 3.3 V, LM5164 ~10 µA. Through the buck ≈ half of the 17 mA measured on the LilyGO — the isolated DC/DC is gone. Measure it.</div></div>
+</div>
+<p><strong>WEBENCH run 2026-09-15</strong> (VIN 6–40 V, VOUT 3.3 V, IOUT 1 A, 60 °C): TI's tool picks RON 27.4 kΩ, L 22 µH and CBST 2.2 nF — identical to the above. Feedback 178k/101k (same ratio as 100k/57.6k), Cout 3 × 10 µF, ripple network 205k/1.2 nF/100 pF — equivalent to ours, which injects slightly less ripple and still ≥ 12 mV at 6 V. Efficiency 78 % at 1 A.</p>
+<p>Type 3 was chosen because the output is pure ceramic with no ESR — types 1/2 would need a series resistor and more ripple on 3V3.</p>
+
+<h2 id="s5"><span class="num">5</span>Layout</h2>
+<h3><span class="num">5.1</span>Stackup — 4 layers, 1.6 mm (JLC04161H-7628)</h3>
+<div class="tbl"><table>
+<thead><tr><th class="m">Layer</th><th>Content</th></tr></thead>
+<tbody>
+<tr><td class="m">L1 top</td><td>All components, power loop, crystal, CAN front end, decoupling, CAN RX</td></tr>
+<tr><td class="m">L2 (In1)</td><td>Unbroken GND plane</td></tr>
+<tr><td class="m">L3 (In2)</td><td>3V3 plane (+ one short trace for the unpopulated termination centre)</td></tr>
+<tr><td class="m">L4 bottom</td><td>SPI + INT (6 traces U1 ↔ U2), CAN TX, MCP_INT, USB/UART/IO0/EN to the flash pads, VBAT along the right edge, GND fill, silkscreen (§6.1)</td></tr>
+</tbody></table></div>
+<h3><span class="num">5.2</span>Placement (as built)</h3>
+<ol>
+  <li><strong>U1 at the left end</strong>, U.FL connector facing out over the board edge. The WROOM-1U has no PCB antenna, so there is no keep-out beyond the module's own edge — but the buck and its inductor are kept away from it.</li>
+  <li><strong>U3 + L2 + C1/C2 + C3/C4 at the right end.</strong> The hot loop (C1 → U3 VIN → SW → L2 → C4 → GND) is the smallest area on the board. SW node: only on L1, short and wide.</li>
+  <li><strong>U2 and X1 top centre.</strong> Crystal within 5 mm of OSC1/OSC2, C10/C11 between crystal and U2, GND return straight to pin 7.</li>
+  <li><strong>U4 → L1 → D3 → pads in a straight line down the middle.</strong> D3 on the bus side of L1, closest to the pads.</li>
+  <li><strong>SPI</strong> on the back, ≤ 25 mm, over unbroken GND.</li>
+</ol>
+<h3><span class="num">5.3</span>The seven rules</h3>
+<ol>
+  <li>CANH/CANL routed as a pair, 0.3 mm trace, matched length, no vias between U4 and the pads.</li>
+  <li>Decoupling capacitors within 2 mm of the pin they decouple; 100 nF closest.</li>
+  <li>U3's EP and U1's EP: via arrays into L2.</li>
+  <li>FB node (R2/R3/C7) short and away from SW and L2. The RA/CA branch may run along SW — it is meant to see SW.</li>
+  <li>VBAT path from P1 through F1 → D1 → D2/C1 → U3: 0.8 mm wide on top, 0.4 mm on the back run. 3V3 plane on L3.</li>
+  <li>Signal name at every solder pad on the silkscreen. CANH/CANL can be swapped with solder pads — they could not with a keyed connector.</li>
+  <li>No component closer than 1.5 mm to the board edge (coating and edge milling).</li>
+</ol>
+
+<h2 id="s6"><span class="num">6</span>Mechanical and environment</h2>
+<ul>
+  <li>All SMD, no pin headers, no electrolytics, no screw terminals.</li>
+  <li>−40/+105 °C parts; AEC-Q200 passives where they cost nothing extra. The exception is U1 (§2).</li>
+  <li>Conformal coating after the first flash and test — or soft silicone potting. <strong>Not epoxy:</strong> Murata's spec for L1 (§13.4) warns that cure stress from resin can change the inductance or break the wire; the same caution applies to X1. Keep the U.FL connector and the pads free during testing.</li>
+  <li>No mounting holes: the board is coated or potted, and fixed with foam tape and a cable tie, or potted in a small box.</li>
+  <li>Antenna: a short stub antenna on a U.FL pigtail, placed clear of metal and carbon fibre. A PCB antenna under a seat behind steel does not work.</li>
+</ul>
+
+<h3 id="s6-0"><span class="num">6.0</span>Soldered wires — pads, no connectors</h3>
+<p>The service connector provides CAN H, CAN L, GND and permanent 12 V. Because the board is not isolated there is one ground: LilyGO's five wires (12 V+, 12 V−, D GND, CAN H, CAN L) become <strong>four</strong> — VBAT, GND, CANH, CANL — along the bottom edge.</p>
+<div class="tbl"><table>
+<thead><tr><th class="m">Pad</th><th>Signal</th><th>Wire from the service connector</th><th>Hole</th></tr></thead>
+<tbody>
+<tr><td class="m">P4</td><td>CANL</td><td>C02-2 DG</td><td class="n">Ø1.5 mm</td></tr>
+<tr><td class="m">P3</td><td>CANH</td><td>C02-1 YE</td><td class="n">Ø1.5 mm</td></tr>
+<tr><td class="m">P2</td><td>GND</td><td>GND — <em>one</em> wire, shared by supply and bus</td><td class="n">Ø2.0 mm</td></tr>
+<tr><td class="m">P1</td><td>VBAT (permanent 12 V)</td><td>12 V+</td><td class="n">Ø2.0 mm</td></tr>
+</tbody></table></div>
+<div class="callout">
+  <p class="t">Strain-relief holes — the difference between lasting a season and lasting years</p>
+  <p>A solder joint on a vibrating vehicle breaks at the root of the wire, not in the solder. The fix costs nothing: an extra Ø1.2 mm unplated hole 3 mm from each pad. The wire comes in from the edge, up through the hole, and down into the pad, so the board takes the strain instead of the joint. Add a drop of glue or resin over each pad after soldering.</p>
+</div>
+<p>The CAN shield is not bonded on the board — it is already grounded at the ECM (single point). So there is no S GND pad.</p>
+
+<h3 id="s6-1"><span class="num">6.1</span>Silkscreen</h3>
+<p>Bottom side (L4), 1.2 mm text height, 0.2 mm stroke, with no components under it:</p>
+<p><span class="silk">Springcommand - Nanna Agesen 2026<br>CANFD-MC v1.0 2026-09</span></p>
+<ul>
+  <li>Plain ASCII hyphen, not an en dash — several fabs' Gerber fonts lack the glyph and silently drop it.</li>
+  <li>The revision line is worth its weight the day three versions sit in a drawer.</li>
+  <li>Top side: signal name at every pad. Back side: <code>BENCH ONLY</code> under RT1/RT2, and the flash-pad names.</li>
+</ul>
+
+<h2 id="s7"><span class="num">7</span>Open points</h2>
+<div class="tbl"><table>
+<thead><tr><th>Point</th><th>Status</th><th>What it takes</th></tr></thead>
+<tbody>
+<tr><td>Connector choice</td><td><span class="chip ok">CLOSED</span></td><td>Solder pads with strain relief, §6.0</td></tr>
+<tr><td>Permanent vs. ignition-switched supply</td><td><span class="chip ok">CLOSED</span></td><td>Permanent 12 V, as today. The ACC wake input considered in <code>SLEEP.md</code> was dropped: the firmware wakes on CAN (ext0 on GPIO 8) and needs nothing else</td></tr>
+<tr><td>Does the firmware use FD frames?</td><td><span class="chip ok">CLOSED</span></td><td>No — <code>Normal20B</code>, classic J1939 at 250 kbit/s. The hardware can do FD; it is not used</td></tr>
+<tr><td>Oscillator frequency</td><td><span class="chip ok">CLOSED</span></td><td>40 MHz crystal, §4.3</td></tr>
+<tr><td>LM5164 RON / inductor / feedback</td><td><span class="chip ok">CLOSED</span></td><td>Confirmed in WEBENCH 2026-09-15 — RON, L and CBST identical to TI's choice, §4.5</td></tr>
+<tr><td>Crystal part number</td><td><span class="chip ok">CLOSED</span></td><td>YXC X322540MPB4SI (CL 15 pF) + 2 × 22 pF — what JLCPCB stocks. Standard 3225 pinout (1/3 crystal, 2/4 GND)</td></tr>
+<tr><td>Module variant (temperature)</td><td><span class="chip warn">OPEN</span></td><td>N16R8 now; measure the temperature at the mounting spot. N16R2 needs a PSRAM config change</td></tr>
+</tbody></table></div>
+
+<h2 id="s8"><span class="num">8</span>Sources</h2>
+<ul class="src">
+  <li>LilyGO T-2Can repo — <code>libraries/private_library/pin_config.h</code> and <code>project/T-2Can-Fd_V1.0.pdf</code> (schematic: MCP2518FD pinout, X1 40 MHz + 2×12 pF, INT/INT0/INT1 → IO8/IO9/IO3, RS2 10k pull-up). <a href="https://github.com/Xinyuan-LilyGO/T-2Can">github.com/Xinyuan-LilyGO/T-2Can</a></li>
+  <li>Prinsessen/indian-thunderstroke-canbus — <code>firmware/src/can_hal_mcp.cpp</code> (pin map, <code>OSC_40MHz</code>, no reset), <code>sleep.cpp</code>/<code>docs/SLEEP.md</code> (ext0 on IO8, 17 mA measurement, wiring), <code>docs/FLASHING.md</code> (wire colours, shield not bonded), <code>platformio.ini</code> (<code>sniffer-t2can</code>, USB CDC). <a href="https://github.com/Prinsessen/indian-thunderstroke-canbus">github.com/Prinsessen/indian-thunderstroke-canbus</a></li>
+  <li>TI LM5164 datasheet SNVSAU4D, rev. Feb 2026 — pin functions (table 4-1), eq. 10, 13–26, table 6-1. WEBENCH Power Designer, run 2026-09-15.</li>
+  <li>Espressif ESP32-S3-WROOM-1/1U datasheet — pinout, temperature grades (OPI-PSRAM variants −40…65 °C).</li>
+  <li>Microchip MCP2518FD datasheet — SOIC-14 pinout, crystal on OSC1/OSC2.</li>
+  <li>TI TCAN33x datasheet — SOIC-8 pinout, 3.3 V operation, interoperability with 5 V nodes.</li>
+  <li>Murata DLW43SH spec JEFL243C — pin arrangement (1/4 one end, 2/3 the other), resin-coating caution §13.4.</li>
+</ul>
+
+<h2 id="s9"><span class="num">9</span>Checklist before fab</h2>
+<ul class="check">
+  <li><span class="box"></span><span>WEBENCH run of §4.5 — <strong>done</strong>, RON/L/CBST identical to TI's choice</span></li>
+  <li><span class="box"></span><span>X1 footprint matches the purchased part (3225, pad orientation) — done</span></li>
+  <li><span class="box"></span><span>ERC/DRC clean; IO35/36/37 are NC; IO9/IO3 are inputs without pull-ups — done</span></li>
+  <li><span class="box"></span><span>RT1/RT2/CT1 marked DNP in the BOM and "BENCH ONLY" on the silkscreen — done</span></li>
+  <li><span class="box"></span><span>Strain-relief holes at P1–P4, Ø1.2 mm, unplated, 3 mm from the pad — done</span></li>
+  <li><span class="box"></span><span>Silkscreen: ASCII hyphen, 1.2 mm height, bottom side free of components — done</span></li>
+  <li><span class="box"></span><span>GND plane on In1 unbroken under SW node, crystal and CAN pair — done</span></li>
+  <li><span class="box"></span><span>After assembly: 60 Ω bench check of the bike's bus <em>before</em> the board is connected (as in FLASHING.md)</span></li>
+  <li><span class="box"></span><span>First flash via the USB_DP/USB_DN pads on the back, board powered from a current-limited 12 V bench supply; OTA after that</span></li>
+  <li><span class="box"></span><span>Measure sleep current in series with 12 V, compare with the 17 mA baseline in SLEEP.md</span></li>
+  <li><span class="box"></span><span>Fix the comment in <code>can_hal_mcp.cpp</code> line 17 (Longan defaults to 20 MHz)</span></li>
+</ul>
+
+<h2 id="s10"><span class="num">10</span>KiCad project and ordering</h2>
+<p>The document was turned into a KiCad 10 project, and the board is <strong>placed and routed: DRC 0 errors, 0 unconnected</strong> (55 × 32 mm, 4 layers, 193 track segments, 68 vias). The production files are in the repository's <code>production/</code> folder: Gerber zip, BOM (26 lines, all with LCSC numbers, DNP parts omitted) and placement file (CPL) in JLCPCB's format. All four main ICs were verified in stock at JLCPCB on 2026-09-15.</p>
+<div class="tbl"><table>
+<thead><tr><th>Step</th><th>What</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="m">1</td><td>WEBENCH run of §4.5</td><td>Done 2026-09-15 — confirmed</td></tr>
+<tr><td class="m">2</td><td>JLCPCB order: 4 layers, FR4 TG135, LeadFree HASL, 0.3 mm vias, 5 boards</td><td>Ordered September 2026</td></tr>
+<tr><td class="m">3</td><td>Standard PCBA top side, 5 boards, Confirm Parts Placement</td><td>Ordered. Check pin 1 of U1–U4, D1, D3, L1 on the engineer's confirmation image before approving</td></tr>
+</tbody></table></div>
+<p>Every calculation in the document is now backed by a datasheet or a simulation. What remains is the part no document can do: the bring-up on the bench.</p>
+
+<footer>CANFD-MC Adapter · rev 1.0 · Springcommand · Nanna Agesen · 2026-09-15. All corrections from the original thread (40 MHz, solder pads, no termination, silkscreen) are incorporated.</footer>
+</main>
+</div>
+</div>

@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "canfd_local")(type "KiCad")(uri "${KIPRJMOD}/canfd_local.pretty")(options "")(descr "Project footprints: solder pads with strain-relief hole, Murata DLW43SH"))
+)
