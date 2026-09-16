@@ -6,7 +6,7 @@ project: ESP32-S3-WROOM-1U + MCP2518FD + TCAN332G, fed from the bike's
 permanent 12 V through an LM5164 buck. Same pin map as the LilyGO board, so the
 firmware runs unchanged (`sniffer-t2can` environment).
 
-![top](docs/board-top.png)
+![CANFD-MC rev 1.0](docs/board-render.png)
 
 What it drops from the LilyGO board, on purpose: the isolated transceiver (one
 machine, one ground — the isolation was bridged the moment it was wired in, and
