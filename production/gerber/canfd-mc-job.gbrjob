@@ -5,13 +5,13 @@
       "Application": "Pcbnew",
       "Version": "10.0.6"
     },
-    "CreationDate": "2026-09-15T12:52:44+02:00"
+    "CreationDate": "2026-09-16T08:03:40+02:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "canfd-mc",
       "GUID": "63616e66-642d-46d6-932e-6b696361645f",
-      "Revision": "1.0"
+      "Revision": "1.1"
     },
     "Size": {
       "X": 55.1,

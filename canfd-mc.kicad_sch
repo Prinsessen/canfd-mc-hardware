@@ -7,11 +7,314 @@
 	(title_block
 		(title "CANFD-MC Adapter")
 		(date "2026-09-15")
-		(rev "1.0")
+		(rev "1.1")
 		(company "Springcommand - Nanna Agesen")
 		(comment 1 "Indian Springfield J1939 sniffer - motorcycle mount")
 	)
 	(lib_symbols
+	(symbol "Connector_Generic:Conn_01x07"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x07"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x07, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_01x07_1_1"
+				(rectangle
+					(start -1.27 8.89)
+					(end 1.27 -8.89)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 7.747)
+					(end 0 7.493)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 5.207)
+					(end 0 4.953)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -7.493)
+					(end 0 -7.747)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 7.62 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 5.08 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -5.08 0)
+					(length 3.81)
+					(name "Pin_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -7.62 0)
+					(length 3.81)
+					(name "Pin_7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	(symbol "Connector:TestPoint"
 			(pin_numbers
 				(hide yes)
@@ -4679,7 +4982,7 @@
 		)
 		(uuid "05a8c871-55a2-4a89-8653-c29427a08089")
 	)
-	(text "5  Flash pads (pogo pins, first flash only - OTA after that), power flags"
+	(text "5  Flash header J1 (2.54 mm, not fitted - press-fit a header for the first flash, OTA after that), test pads, power flags"
 		(exclude_from_sim no)
 		(at 20 260 0)
 		(effects
@@ -5910,76 +6213,6 @@
 			(type default)
 		)
 		(uuid "40d554d5-0fe5-4c06-adc1-00af65bd8692")
-	)
-	(wire
-		(pts
-			(xy 20.32 275.59) (xy 20.32 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0599cc49-a493-45f0-9899-957000eb872b")
-	)
-	(wire
-		(pts
-			(xy 40.64 275.59) (xy 40.64 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1c60f5d9-8af9-44f6-b72a-51da22e51cd5")
-	)
-	(wire
-		(pts
-			(xy 60.96 275.59) (xy 60.96 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dcc61fb3-09ca-4f98-b3ce-631a9d8b3fa6")
-	)
-	(wire
-		(pts
-			(xy 81.28 275.59) (xy 81.28 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a977aeb0-f9fd-4143-9f0c-2746f298f88d")
-	)
-	(wire
-		(pts
-			(xy 101.6 275.59) (xy 101.6 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "577b633f-f7d7-4df4-aaf2-0a5678aaf3d0")
-	)
-	(wire
-		(pts
-			(xy 121.92 275.59) (xy 121.92 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f345355d-c358-4763-99b5-72305355f87b")
-	)
-	(wire
-		(pts
-			(xy 142.24 275.59) (xy 142.24 278.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "730b213d-cfe6-48d5-a104-4e2595109e60")
 	)
 	(wire
 		(pts
@@ -7372,76 +7605,6 @@
 			(justify right bottom)
 		)
 		(uuid "c3f0b446-6438-447c-ab4b-847b5be51f3a")
-	)
-	(label "GND"
-		(at 20.32 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "68f072e6-dd78-4e5d-abed-14f1aae8c29a")
-	)
-	(label "USB_DN"
-		(at 40.64 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "633d4887-86f5-4e01-9287-b5109d31ea80")
-	)
-	(label "USB_DP"
-		(at 60.96 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9fdabe24-250f-4e0a-9e5b-3a4267fb8fde")
-	)
-	(label "IO0"
-		(at 81.28 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "3670ec0b-a9a0-4a1c-9bb5-449797383f5b")
-	)
-	(label "ESP_EN"
-		(at 101.6 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "7a4890fd-c34b-467a-9d60-de683ee76208")
-	)
-	(label "UART_TX"
-		(at 121.92 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "7e668623-1de6-49e0-ba61-a64c5f6bc222")
-	)
-	(label "UART_RX"
-		(at 142.24 278.13 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "95aab51f-b581-472a-8a18-3680ab74a6a1")
 	)
 	(label "+3V3"
 		(at 229.87 275.59 0)
@@ -9679,7 +9842,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "ESP32-S3-WROOM-1U-N16R8"
+		(property "Value" "ESP32-S3-WROOM-1U-N8"
 			(at 66.03999999999999 144.78 0)
 			(effects
 				(font
@@ -9708,7 +9871,7 @@
 				(justify left)
 			)
 		)
-		(property "LCSC" "C3013946"
+		(property "LCSC" "C2980297"
 			(at 64.77 175.26 0)
 			(hide yes)
 			(effects
@@ -10450,7 +10613,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 110.49 234.95 0)
 			(hide yes)
 			(effects
@@ -10522,7 +10685,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 129.54 234.95 0)
 			(hide yes)
 			(effects
@@ -10877,559 +11040,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 20.32 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "9e1f026f-cf99-4d9d-ae60-f7ae7d0f4cb6")
-		(property "Reference" "TP1"
-			(at 21.59 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GND"
-			(at 21.59 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 20.32 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 20.32 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 20.32 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 20.32 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "b19ecd4e-2c12-4c3c-80fa-9e934ec51406")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 40.64 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "fc0d2b65-3562-4494-a0a6-2e7c9b59a021")
-		(property "Reference" "TP2"
-			(at 41.910000000000004 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "USB_DN"
-			(at 41.910000000000004 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 40.64 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 40.64 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 40.64 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 40.64 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "3337753f-249e-48be-9adf-dbac46563858")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "a052f0fb-ea66-4acd-b0ed-73fb322a1f3b")
-		(property "Reference" "TP3"
-			(at 62.230000000000004 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "USB_DP"
-			(at 62.230000000000004 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 60.96 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 60.96 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 60.96 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 60.96 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "23cd5ddb-159f-466e-aeb9-89e6653e4cfe")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 81.28 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "a583eef7-4cd2-4f26-b7a0-1cc49c11c8fc")
-		(property "Reference" "TP4"
-			(at 82.55 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "IO0"
-			(at 82.55 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 81.28 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 81.28 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 81.28 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 81.28 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "44c525cb-a077-47bf-b5b5-2cbf27a5b270")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 101.6 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "ec9dd884-8ca6-446d-9b34-645da9372b85")
-		(property "Reference" "TP5"
-			(at 102.86999999999999 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ESP_EN"
-			(at 102.86999999999999 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 101.6 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 101.6 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 101.6 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 101.6 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "e4426393-c5d4-45a8-a2bb-c17a96ecd1ff")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 121.92 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "c9ca144f-ae25-4bbf-baf6-b66544e7e3a5")
-		(property "Reference" "TP6"
-			(at 123.19 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "UART_TX"
-			(at 123.19 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 121.92 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 121.92 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 121.92 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 121.92 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "5212630a-5911-45ff-81da-daec53d55708")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 142.24 275.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "7019d13b-a186-448e-8089-283e5f22dc2a")
-		(property "Reference" "TP7"
-			(at 143.51000000000002 270.50999999999993 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "UART_RX"
-			(at 143.51000000000002 273.04999999999995 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 142.24 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 142.24 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "LCSC" ""
-			(at 142.24 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "Pogo pad, first flash only"
-			(at 142.24 275.59 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "1"
-			(uuid "8d9c3a3c-b15e-4e82-a9a7-4fc2871e105e")
-		)
-		(instances
-			(project "canfd-mc"
-				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
-					(reference "TP7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:PWR_FLAG")
 		(at 224.79 270.51 0)
 		(unit 1)
@@ -11729,6 +11339,441 @@
 			)
 		)
 	)
+	(wire
+		(pts
+			(xy 35.56 269.24) (xy 33.02 269.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6c6404a-4633-4f2b-90bd-54342e2aa6c2")
+	)
+	(label "GND"
+		(at 33.02 269.24 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ed944473-aafd-420d-b2fd-ef405687d9e9")
+	)
+	(wire
+		(pts
+			(xy 35.56 271.78) (xy 33.02 271.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3ce56b34-4e81-4d41-971a-e52c33b827ff")
+	)
+	(label "ESP_EN"
+		(at 33.02 271.78 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4f841ea5-416f-4574-8780-1f49e5a68ac7")
+	)
+	(wire
+		(pts
+			(xy 35.56 274.32) (xy 33.02 274.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3b9e3c3-f8d2-41c3-a1dc-7291e81b9331")
+	)
+	(label "UART_TX"
+		(at 33.02 274.32 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "078ebe12-f1a9-48dd-a72a-59d9dcbd9022")
+	)
+	(wire
+		(pts
+			(xy 35.56 276.86) (xy 33.02 276.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7fd632cd-e376-4163-bebc-aef5c7bc8f7d")
+	)
+	(label "UART_RX"
+		(at 33.02 276.86 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "10d3ee23-0836-4689-9457-0b05cd4c6d3e")
+	)
+	(wire
+		(pts
+			(xy 35.56 279.40) (xy 33.02 279.40)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e08595ee-70c1-4870-9b43-0fcdb4ecaaef")
+	)
+	(label "IO0"
+		(at 33.02 279.40 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b6c8e354-63f5-4853-bafa-10948d5199e2")
+	)
+	(wire
+		(pts
+			(xy 35.56 281.94) (xy 33.02 281.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "04e81721-9cfa-4c3a-b05f-9f2d020e41c9")
+	)
+	(label "USB_DP"
+		(at 33.02 281.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a95c650a-2cff-4a66-848c-bf31a9bacf77")
+	)
+	(wire
+		(pts
+			(xy 35.56 284.48) (xy 33.02 284.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15be747a-95c2-498b-b96b-ec8e001f313b")
+	)
+	(label "USB_DN"
+		(at 33.02 284.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "58d9d1d0-7e08-4ce8-afe3-f050b5b315fd")
+	)
+	(wire
+		(pts
+			(xy 71.12 275.59) (xy 71.12 278.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a20a0f4b-7eed-488c-985c-8179b2f46ba0")
+	)
+	(label "+3V3"
+		(at 71.12 278.13 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f81972d0-67cb-4fff-a163-8cf3fbaf0dee")
+	)
+	(wire
+		(pts
+			(xy 91.44 275.59) (xy 91.44 278.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f52eab68-3ec4-4101-b46f-0dc3824b9633")
+	)
+	(label "VIN_PROT"
+		(at 91.44 278.13 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9a4bfe32-c84c-45ba-bdb5-49fa64727ee7")
+	)	(symbol
+		(lib_id "Connector_Generic:Conn_01x07")
+		(at 40.64 276.86 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "f343aca3-a071-49cd-9e96-3978551f789c")
+		(property "Reference" "J1"
+			(at 41.910000000000004 265.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Flash header 1x7 2.54mm (not fitted)"
+			(at 41.910000000000004 267.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical"
+			(at 40.64 276.86 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 40.64 276.86 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 40.64 276.86 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "Unpopulated 2.54 mm header on the back for the first flash: GND EN TX RX IO0 USB_D+ USB_D-"
+			(at 40.64 276.86 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid "b071f587-427d-487c-a54f-9a4ebb1a597c")
+		)
+		(pin "2"
+			(uuid "89aeb49a-b570-4863-9063-be26261d7c8f")
+		)
+		(pin "3"
+			(uuid "82619666-127a-4957-84d2-0cf79c2e463b")
+		)
+		(pin "4"
+			(uuid "a4f4ce79-8290-473a-8d23-24fb3656360c")
+		)
+		(pin "5"
+			(uuid "6c883b3e-f935-4292-93e5-9e1c3e89054e")
+		)
+		(pin "6"
+			(uuid "47ff9424-2cd5-40da-8963-ed7070a15dc6")
+		)
+		(pin "7"
+			(uuid "3b152a95-3093-4f54-bfdf-bcf05d599666")
+		)
+		(instances
+			(project "canfd-mc"
+				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 71.12 275.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "19e2cca7-3350-419a-98cb-4dcda61a9237")
+		(property "Reference" "TP1"
+			(at 72.39 270.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "3V3"
+			(at 72.39 273.04999999999995 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical"
+			(at 71.12 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 71.12 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 71.12 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "Test pad, 3V3 rail (back side)"
+			(at 71.12 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid "87d3df05-6ae0-416d-a0e4-c4657d1acca5")
+		)
+		(instances
+			(project "canfd-mc"
+				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 91.44 275.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "204c38ee-817d-4c06-b95b-d30ffce51395")
+		(property "Reference" "TP2"
+			(at 92.71 270.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "VIN"
+			(at 92.71 273.04999999999995 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical"
+			(at 91.44 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 91.44 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "LCSC" ""
+			(at 91.44 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "Test pad, protected input after fuse, Schottky and TVS (back side)"
+			(at 91.44 275.59 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid "98c2d0f9-a948-449f-995d-1d29fcef5a1f")
+		)
+		(instances
+			(project "canfd-mc"
+				(path "/74e43716-7acd-426a-b8db-48adf83895b6"
+					(reference "TP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+
 	(sheet_instances
 		(path "/"
 			(page "1")

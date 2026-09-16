@@ -36,7 +36,8 @@ inboard: thread the wire up through the hole and down into the pad, so the
 board takes the strain instead of the solder joint. No shield pad: the bus
 shield is grounded at the ECM.
 
-Flashing pads on the back, 2.54 mm pitch — **GND · EN · TX · RX · IO0 · USB_D+ · USB_D−**.
+Flash header on the back (through-hole from rev 1.1, flat pads on rev 1.0), 2.54 mm pitch —
+**GND · EN · TX · RX · IO0 · USB_D+ · USB_D−**.
 First flash goes over the ESP32-S3's native USB (a cut USB cable on D+/D−/GND;
 the board is powered from 12 V, not from USB). After that, OTA.
 
@@ -54,7 +55,9 @@ TI's WEBENCH: RON, inductor and bootstrap capacitor came out identical.
 
 ## Status
 
-Rev 1.0. Ordered from JLCPCB in September 2026 (5 boards, assembled). Reviewed
+Rev 1.0 ordered from JLCPCB in September 2026 (5 boards, assembled) — on `main`.
+Rev 1.1 (85 °C module, through-hole flash header and test pads) is on the
+`rev1.1` branch, ready but unordered until rev 1.0 has been tested. Reviewed
 ([docs/REVIEW-rev1.0.md](docs/REVIEW-rev1.0.md)): net list confirmed against the
 datasheets, three notes for rev 1.1. Not yet tested on
 hardware — this is a first revision, and the bring-up checklist in the design

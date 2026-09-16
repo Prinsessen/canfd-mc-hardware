@@ -107,7 +107,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 
 <main>
 <header class="hero">
-  <div class="eyebrow">Design document · rev 1.0 · 2026-09-15 · board routed, DRC clean, ordered</div>
+  <div class="eyebrow">Design document · rev 1.1 · 2026-09-16 · rev 1.0 in production, rev 1.1 ready</div>
   <h1>CANFD-MC Adapter</h1>
   <p class="lede">A minimal board for the Indian Springfield bus: ESP32-S3-WROOM-1U + MCP2518FD, soldered wires, no USB connector, no isolation, no termination. The firmware from <code>Prinsessen/indian-thunderstroke-canbus</code> (environment <code>sniffer-t2can</code>) runs unchanged.</p>
   <dl class="specs">
@@ -197,7 +197,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <thead><tr><th class="m">Ref</th><th>Part</th><th>Value / type</th><th>Package</th><th>LCSC</th><th>Note</th></tr></thead>
 <tbody>
 <tr class="grp"><td colspan="6">Active</td></tr>
-<tr><td class="m">U1</td><td>ESP32-S3-WROOM-1U-N16R8</td><td>16 MB / 8 MB OPI · 65 °C</td><td>Module 18 × 19.2 mm</td><td class="m">C3013946</td><td>Rev 1.0 as built. <strong>Rev 1.1: N8 or N16R2 (85 °C)</strong>, see §2</td></tr>
+<tr><td class="m">U1</td><td>ESP32-S3-WROOM-1U-N8</td><td>8 MB flash, no PSRAM · 85 °C</td><td>Module 18 × 19.2 mm</td><td class="m">C2980297</td><td>Rev 1.0 was built with the N16R8 (C3013946, 65 °C); see §2</td></tr>
 <tr><td class="m">U2</td><td>MCP2518FDT-E/SL</td><td>CAN FD controller</td><td>SOIC-14</td><td class="m">C626758</td><td>As LilyGO</td></tr>
 <tr><td class="m">U3</td><td>LM5164DDAR</td><td>100 V / 1 A buck</td><td>SO PowerPAD-8</td><td class="m">C477928</td><td>EP to GND plane</td></tr>
 <tr><td class="m">U4</td><td>TCAN332GDR</td><td>3.3 V CAN transceiver</td><td>SOIC-8</td><td class="m">C191010</td><td>Pins 5 and 8 NC</td></tr>
@@ -233,10 +233,11 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <tr><td class="m">P3, P4</td><td>Solder pad CANH / CANL</td><td>Ø1.5 mm plated</td><td>—</td><td class="m">—</td><td>+ strain-relief hole, §6.0</td></tr>
 <tr><td class="m">L1</td><td>Common-mode choke, CAN</td><td>Murata DLW43SH101XK2L</td><td>4532</td><td class="m">C123085</td><td>AEC-Q200. Pins 1/4 at one end, 2/3 at the other — project footprint. Does not tolerate hard potting (§6)</td></tr>
 <tr><td class="m">D3</td><td>TVS, CAN</td><td>Nexperia PESD2CAN</td><td>SOT-23</td><td class="m">C75176</td><td>Pins 1/2 to CANH/CANL, pin 3 GND — on the bus side of L1</td></tr>
-<tr><td class="m">RT1, RT2</td><td>Split termination</td><td>60.4 Ω</td><td>0805</td><td class="m">—</td><td><span class="chip bad">DO NOT POPULATE</span> §4.4</td></tr>
+<tr><td class="m">RT1, RT2</td><td>Split termination</td><td>60.4 Ω</td><td>1206 (0805 in rev 1.0)</td><td class="m">—</td><td><span class="chip bad">DO NOT POPULATE</span> §4.4</td></tr>
 <tr><td class="m">CT1</td><td>Split termination, centre</td><td>4.7 nF</td><td>0603</td><td class="m">—</td><td><span class="chip bad">DO NOT POPULATE</span> §4.4</td></tr>
 <tr class="grp"><td colspan="6">Test / flash</td></tr>
-<tr><td class="m">TP1–TP7</td><td>Pogo pads Ø1.5 mm, 2.54 mm pitch, back side</td><td>GND · EN · TX · RX · IO0 · USB D+ · USB D−</td><td>—</td><td class="m">—</td><td>Nothing mounted. First flash only; OTA after that</td></tr>
+<tr><td class="m">J1</td><td>Flash header, back side, not fitted</td><td>1 × 7, 2.54 mm, through-hole</td><td>PinHeader_1x07</td><td class="m">—</td><td>GND · EN · TX · RX · IO0 · USB D+ · USB D−. Press-fit a header for the first flash; OTA after that. (Rev 1.0: flat SMD pogo pads)</td></tr>
+<tr><td class="m">TP1, TP2</td><td>Test pads, back side</td><td>3V3 · VIN (after fuse, Schottky, TVS)</td><td>1 × 1, 2.54 mm, through-hole</td><td class="m">—</td><td>New in rev 1.1</td></tr>
 </tbody></table></div>
 
 <h2 id="s4"><span class="num">4</span>Net list</h2>
@@ -247,8 +248,8 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <tbody>
 <tr><td class="m">1, 40, 41</td><td class="m">GND, GND, EP</td><td class="m">GND</td><td>GND plane</td><td>EP: via array</td></tr>
 <tr><td class="m">2</td><td class="m">3V3</td><td class="m">3V3</td><td>C12, C13, C14</td><td></td></tr>
-<tr><td class="m">3</td><td class="m">EN</td><td class="m">ESP_EN</td><td>R7 10k → 3V3, C19 1 µF → GND, TP5</td><td></td></tr>
-<tr><td class="m">27</td><td class="m">IO0</td><td class="m">IO0</td><td>R8 10k → 3V3, TP4</td><td>Boot strap</td></tr>
+<tr><td class="m">3</td><td class="m">EN</td><td class="m">ESP_EN</td><td>R7 10k → 3V3, C19 1 µF → GND, J1 pin 2</td><td></td></tr>
+<tr><td class="m">27</td><td class="m">IO0</td><td class="m">IO0</td><td>R8 10k → 3V3, J1 pin 5</td><td>Boot strap</td></tr>
 <tr><td class="m">12</td><td class="m">IO8</td><td class="m">MCP_INT</td><td>U2 pin 4, R9 10k → 3V3</td><td>RTC GPIO → ext0 wake in <code>sleep.cpp</code></td></tr>
 <tr><td class="m">18</td><td class="m">IO10</td><td class="m">SPI_CS</td><td>U2 pin 13</td><td><code>MCP_CS</code></td></tr>
 <tr><td class="m">19</td><td class="m">IO11</td><td class="m">SPI_MOSI</td><td>U2 pin 11 (SDI)</td><td><code>MCP_MOSI</code></td></tr>
@@ -256,10 +257,10 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <tr><td class="m">21</td><td class="m">IO13</td><td class="m">SPI_MISO</td><td>U2 pin 12 (SDO)</td><td><code>MCP_MISO</code></td></tr>
 <tr><td class="m">17</td><td class="m">IO9</td><td class="m">MCP_INT0</td><td>U2 pin 9</td><td>As LilyGO. Controller output — the ESP must never drive it</td></tr>
 <tr><td class="m">15</td><td class="m">IO3</td><td class="m">MCP_INT1</td><td>U2 pin 8</td><td>As LilyGO. Same rule</td></tr>
-<tr><td class="m">13</td><td class="m">IO19</td><td class="m">USB_DN</td><td>TP2</td><td>Native USB-Serial/JTAG — matches <code>ARDUINO_USB_CDC_ON_BOOT=1</code></td></tr>
-<tr><td class="m">14</td><td class="m">IO20</td><td class="m">USB_DP</td><td>TP3</td><td></td></tr>
-<tr><td class="m">37</td><td class="m">TXD0</td><td class="m">UART_TX</td><td>TP6</td><td>Backup flash path</td></tr>
-<tr><td class="m">36</td><td class="m">RXD0</td><td class="m">UART_RX</td><td>TP7</td><td></td></tr>
+<tr><td class="m">13</td><td class="m">IO19</td><td class="m">USB_DN</td><td>J1 pin 7</td><td>Native USB-Serial/JTAG — matches <code>ARDUINO_USB_CDC_ON_BOOT=1</code></td></tr>
+<tr><td class="m">14</td><td class="m">IO20</td><td class="m">USB_DP</td><td>J1 pin 6</td><td></td></tr>
+<tr><td class="m">37</td><td class="m">TXD0</td><td class="m">UART_TX</td><td>J1 pin 3</td><td>Backup flash path</td></tr>
+<tr><td class="m">36</td><td class="m">RXD0</td><td class="m">UART_RX</td><td>J1 pin 4</td><td></td></tr>
 <tr><td class="m">28, 29, 30</td><td class="m">IO35, IO36, IO37</td><td class="m">—</td><td>NC</td><td>Used internally by the OPI PSRAM — must not be used</td></tr>
 <tr><td class="m">26, 16</td><td class="m">IO45, IO46</td><td class="m">—</td><td>NC</td><td>Strap pins; internal pull-downs</td></tr>
 </tbody></table></div>
@@ -403,22 +404,24 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <tr><td>Module variant (temperature)</td><td><span class="chip ok">CLOSED</span></td><td>Firmware does not use PSRAM (board <code>esp32-s3-devkitc-1</code> = N8 definition). Rev 1.1: N8 or N16R2, 85 °C, no firmware change</td></tr>
 </tbody></table></div>
 
-<h3 id="s7-1"><span class="num">7.1</span>Notes for rev 1.1</h3>
-<p>From <a href="REVIEW-rev1.0.md">the review of rev 1.0</a>. None of these blocks bring-up of rev 1.0.</p>
+<h3 id="s7-1"><span class="num">7.1</span>Rev 1.1 — what changed</h3>
+<p>Rev 1.1 is drawn, routed and DRC clean, and lives on the <code>rev1.1</code> branch until rev 1.0 has been on the bench. Changes, from <a href="REVIEW-rev1.0.md">the review of rev 1.0</a> and the bring-up planning:</p>
 <ul>
-  <li><strong>Module:</strong> N8 or N16R2 (85 °C) instead of N16R8. No firmware change.</li>
+  <li><strong>Module N8 (85 °C)</strong> instead of N16R8 (65 °C). The firmware never enables PSRAM, so nothing changes in software.</li>
+  <li><strong>J1: through-hole 1 × 7 header footprint</strong> on the back instead of flat pogo pads — press-fit a 2.54 mm header for the first flash, no fixture, no soldering. Same pin order and positions as the rev 1.0 pads.</li>
+  <li><strong>TP1 (3V3) and TP2 (VIN)</strong> — through-hole test pads on the back for bring-up and on-bike debugging.</li>
+  <li><strong>RT1/RT2 as 1206</strong> with room to hand-solder for bench termination. Still not populated.</li>
+  <li>Silkscreen revision line <code>CANFD-MC v1.1</code>.</li>
+</ul>
+<p>Not changed, pending the bench: the regulator (waits for the cranking-dip measurement).</p>
+<p>Housekeeping already done on rev 1.0's files after the order:</p>
+<ul>
   <li><strong>Leftover <code>ACC_SENSE</code> label on IO1</strong> — removed in the repository after the order; the fabricated rev 1.0 has an unconnected pad there, which is harmless.</li>
   <li><strong>BOM text</strong> for C3/C4/C12/C13 said 10 V; the ordered part (C45783) is 25 V. Text corrected.</li>
   <li><strong>Cranking dip:</strong> UVLO releases at 6.5 V; a cold crank can dip below that and reboot the board (the wake path tolerates it). Measure the dip during cranking before rev 1.1 is frozen. If it matters, the fix is a regulator with a lower minimum input, not a bigger capacitor.</li>
   <li><strong>One-ground rule:</strong> flashing over the USB pads must happen with the board off the bike, or from a laptop on battery — a mains-powered PC's USB ground to the bike's ground is the one case the dropped isolation would have covered.</li>
 </ul>
-<p><strong>Candidate board changes for rev 1.1</strong> — none justify a new order on their own; take them along when the bench gives a reason:</p>
-<ul>
-  <li>Test pads for <code>+3V3</code> and <code>VIN_PROT</code> on the back, next to the flash pads — measuring on 0603 capacitor pads is a poor way to debug on a bike.</li>
-  <li>RT1/RT2 as 1206 with more room around them: they are fitted and removed by hand for bench testing.</li>
-  <li>An unpopulated 1.27 mm header footprint (or wider pads) in place of the pogo pads, so a header can be press-fitted for the first flash without a fixture.</li>
-  <li>If the cranking measurement shows reboots: a regulator with a lower minimum input (LM5163 / LM61460 class) or a lower UVLO — a schematic change, so wait for the measurement.</li>
-</ul>
+<p><strong>Still open for a later revision:</strong> if the cranking measurement shows reboots, a regulator with a lower minimum input (LM5163 / LM61460 class) or a lower UVLO — a schematic change, so it waits for the measurement.</p>
 
 <h2 id="s8"><span class="num">8</span>Sources</h2>
 <ul class="src">
@@ -441,7 +444,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
   <li><span class="box"></span><span>Silkscreen: ASCII hyphen, 1.2 mm height, bottom side free of components — done</span></li>
   <li><span class="box"></span><span>GND plane on In1 unbroken under SW node, crystal and CAN pair — done</span></li>
   <li><span class="box"></span><span>After assembly: 60 Ω bench check of the bike's bus <em>before</em> the board is connected (as in FLASHING.md)</span></li>
-  <li><span class="box"></span><span>First flash via the USB_DP/USB_DN pads on the back, board powered from a current-limited 12 V bench supply; OTA after that</span></li>
+  <li><span class="box"></span><span>First flash via the USB D+/D− pads (rev 1.0) or J1 (rev 1.1) on the back, board powered from a current-limited 12 V bench supply, <strong>off the bike</strong>; OTA after that</span></li>
   <li><span class="box"></span><span>Measure sleep current in series with 12 V, compare with the 17 mA baseline in SLEEP.md</span></li>
   <li><span class="box"></span><span>Fix the comment in <code>can_hal_mcp.cpp</code> line 17 (Longan defaults to 20 MHz)</span></li>
 </ul>
