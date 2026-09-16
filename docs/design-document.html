@@ -99,6 +99,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
   <a href="#s6-0"><span>6.0</span>Soldered wires</a>
   <a href="#s6-1"><span>6.1</span>Silkscreen</a>
   <a href="#s7"><span>7</span>Open points</a>
+  <a href="#s7-1"><span>7.1</span>Notes for rev 1.1</a>
   <a href="#s8"><span>8</span>Sources</a>
   <a href="#s9"><span>9</span>Checklist before fab</a>
   <a href="#s10"><span>10</span>KiCad project &amp; ordering</a>
@@ -184,7 +185,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <p><strong>ESP32-S3-WROOM-1U-N16R8</strong> — the same module as the T-2CANFD, so <code>platformio.ini</code> (<code>esp32-s3-devkitc-1</code>, 16 MB flash / 8 MB OPI PSRAM) and the partition table are untouched. The module has a U.FL connector instead of a PCB antenna, which is the right choice on a motorcycle anyway.</p>
 <div class="callout warn">
   <p class="t">Temperature: the N16R8 is only rated −40…+65 °C ambient</p>
-  <p>The 8 MB octal PSRAM is the limit. Under a seat in the sun, 65 °C is not much margin. Alternatives, both rated to +85 °C: <strong>N16R2</strong> (2 MB quad PSRAM — requires changing the PSRAM type in the board config from OPI to QSPI) or <strong>N16</strong> (no PSRAM — only if the firmware does not use it). Recommendation: build rev 1.0 with the N16R8 and measure the temperature at the actual mounting spot on a hot day. The footprint is identical for all three, so the change is an assembly decision.</p>
+  <p>The 8 MB octal PSRAM is the limit. Under a seat in the sun, 65 °C is not much margin. <strong>Review finding (2026-09-15):</strong> the firmware is built for the PlatformIO board <code>esp32-s3-devkitc-1</code>, which is the "N8, no PSRAM" definition — the PSRAM is never initialised and only 8 MB of flash is used. So the +85 °C variants <strong>N8</strong> or <strong>N16R2</strong> need <em>no firmware change</em>. Rev 1.0 was built with the N16R8 before this was noticed; keep those boards out of the hottest spots. <strong>Rev 1.1: order an 85 °C module.</strong> Same footprint.</p>
 </div>
 <p><strong>MCP2518FD</strong> in SOIC-14, 3.3 V, 40 MHz crystal — exactly as LilyGO. The firmware runs the controller in <code>Normal20B</code> (classic CAN + 29-bit IDs) or <code>ListenOnly</code>; CAN FD is not used, but the chip is the one the code and ACAN2517FD know.</p>
 <p><strong>TCAN332G</strong> — 3.3 V transceiver, SOIC-8, −40…+125 °C, no extra pins to wire. Listen-only is handled in the MCP2518FD, so the transceiver's silent pin (TCAN337G) is unnecessary. Drop-in alternatives with the same base pinout: TCAN337G, SN65HVD230.</p>
@@ -196,7 +197,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <thead><tr><th class="m">Ref</th><th>Part</th><th>Value / type</th><th>Package</th><th>LCSC</th><th>Note</th></tr></thead>
 <tbody>
 <tr class="grp"><td colspan="6">Active</td></tr>
-<tr><td class="m">U1</td><td>ESP32-S3-WROOM-1U-N16R8</td><td>16 MB / 8 MB OPI</td><td>Module 18 × 19.2 mm</td><td class="m">C3013946</td><td>See §2 on temperature</td></tr>
+<tr><td class="m">U1</td><td>ESP32-S3-WROOM-1U-N16R8</td><td>16 MB / 8 MB OPI · 65 °C</td><td>Module 18 × 19.2 mm</td><td class="m">C3013946</td><td>Rev 1.0 as built. <strong>Rev 1.1: N8 or N16R2 (85 °C)</strong>, see §2</td></tr>
 <tr><td class="m">U2</td><td>MCP2518FDT-E/SL</td><td>CAN FD controller</td><td>SOIC-14</td><td class="m">C626758</td><td>As LilyGO</td></tr>
 <tr><td class="m">U3</td><td>LM5164DDAR</td><td>100 V / 1 A buck</td><td>SO PowerPAD-8</td><td class="m">C477928</td><td>EP to GND plane</td></tr>
 <tr><td class="m">U4</td><td>TCAN332GDR</td><td>3.3 V CAN transceiver</td><td>SOIC-8</td><td class="m">C191010</td><td>Pins 5 and 8 NC</td></tr>
@@ -399,8 +400,18 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
 <tr><td>Oscillator frequency</td><td><span class="chip ok">CLOSED</span></td><td>40 MHz crystal, §4.3</td></tr>
 <tr><td>LM5164 RON / inductor / feedback</td><td><span class="chip ok">CLOSED</span></td><td>Confirmed in WEBENCH 2026-09-15 — RON, L and CBST identical to TI's choice, §4.5</td></tr>
 <tr><td>Crystal part number</td><td><span class="chip ok">CLOSED</span></td><td>YXC X322540MPB4SI (CL 15 pF) + 2 × 22 pF — what JLCPCB stocks. Standard 3225 pinout (1/3 crystal, 2/4 GND)</td></tr>
-<tr><td>Module variant (temperature)</td><td><span class="chip warn">OPEN</span></td><td>N16R8 now; measure the temperature at the mounting spot. N16R2 needs a PSRAM config change</td></tr>
+<tr><td>Module variant (temperature)</td><td><span class="chip ok">CLOSED</span></td><td>Firmware does not use PSRAM (board <code>esp32-s3-devkitc-1</code> = N8 definition). Rev 1.1: N8 or N16R2, 85 °C, no firmware change</td></tr>
 </tbody></table></div>
+
+<h3 id="s7-1"><span class="num">7.1</span>Notes for rev 1.1</h3>
+<p>From <a href="REVIEW-rev1.0.md">the review of rev 1.0</a>. None of these blocks bring-up of rev 1.0.</p>
+<ul>
+  <li><strong>Module:</strong> N8 or N16R2 (85 °C) instead of N16R8. No firmware change.</li>
+  <li><strong>Leftover <code>ACC_SENSE</code> label on IO1</strong> — removed in the repository after the order; the fabricated rev 1.0 has an unconnected pad there, which is harmless.</li>
+  <li><strong>BOM text</strong> for C3/C4/C12/C13 said 10 V; the ordered part (C45783) is 25 V. Text corrected.</li>
+  <li><strong>Cranking dip:</strong> UVLO releases at 6.5 V; a cold crank can dip below that and reboot the board (the wake path tolerates it). Measure the dip during cranking before rev 1.1 is frozen. If it matters, the fix is a regulator with a lower minimum input, not a bigger capacitor.</li>
+  <li><strong>One-ground rule:</strong> flashing over the USB pads must happen with the board off the bike, or from a laptop on battery — a mains-powered PC's USB ground to the bike's ground is the one case the dropped isolation would have covered.</li>
+</ul>
 
 <h2 id="s8"><span class="num">8</span>Sources</h2>
 <ul class="src">

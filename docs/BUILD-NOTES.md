@@ -62,7 +62,8 @@ be made with JLCPCB's standard via option.
 
 1. Bench supply, 12 V, **current-limited to 100 mA** for the first power-up.
    Check 3.3 V on C3/C4, note the quiescent current.
-2. First flash over native USB: a USB cable with the device end cut off —
+2. First flash over native USB — **board off the bike, or laptop on battery**
+   (see rev 1.1 notes): a USB cable with the device end cut off —
    green D+ → `USB_DP`, white D− → `USB_DN`, black → `GND`, red not connected.
    Pogo pins or three temporary wires on the back-side pads. The ESP32-S3
    enumerates as a USB JTAG/serial port; `pio run -e sniffer-t2can -t upload`.
@@ -88,7 +89,18 @@ be made with JLCPCB's standard via option.
    cure stress from resin can change the inductance or break the wire. Use
    conformal coating or soft silicone — not epoxy — over L1 and X1.
 
-## Open points
+## Rev 1.1 notes
 
-- N16R8 (65 °C) vs. N16R2 (85 °C): same footprint; measure the temperature at
-  the mounting spot before deciding for a second revision.
+See [REVIEW-rev1.0.md](REVIEW-rev1.0.md) for the reasoning.
+
+- **Module: N8 or N16R2 (85 °C) instead of N16R8.** The firmware's PlatformIO
+  board (`esp32-s3-devkitc-1`) never enables PSRAM and uses 8 MB of flash, so the
+  85 °C variants need no firmware change. Same footprint, same LCSC family.
+- **Flash with the board off the bike**, or from a laptop on battery. There is
+  no isolation: a mains-powered PC's USB ground meets the bike's ground through
+  the board.
+- **Measure the cranking dip** before freezing rev 1.1. UVLO releases at 6.5 V;
+  a cold start below that reboots the board.
+- Housekeeping done in the repository after the rev 1.0 order: the leftover
+  `ACC_SENSE` label on IO1 removed; BOM text for the 22 µF 0805s corrected to
+  25 V (the ordered part was always 25 V).

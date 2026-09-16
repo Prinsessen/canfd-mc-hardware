@@ -54,7 +54,9 @@ TI's WEBENCH: RON, inductor and bootstrap capacitor came out identical.
 
 ## Status
 
-Rev 1.0. Ordered from JLCPCB in September 2026 (5 boards, assembled). Not yet tested on
+Rev 1.0. Ordered from JLCPCB in September 2026 (5 boards, assembled). Reviewed
+([docs/REVIEW-rev1.0.md](docs/REVIEW-rev1.0.md)): net list confirmed against the
+datasheets, three notes for rev 1.1. Not yet tested on
 hardware — this is a first revision, and the bring-up checklist in the design
 document is the plan for finding out what it got wrong.
 
