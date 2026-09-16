@@ -104,3 +104,9 @@ See [REVIEW-rev1.0.md](REVIEW-rev1.0.md) for the reasoning.
 - Housekeeping done in the repository after the rev 1.0 order: the leftover
   `ACC_SENSE` label on IO1 removed; BOM text for the 22 µF 0805s corrected to
   25 V (the ordered part was always 25 V).
+
+Candidate board changes, to take along when the bench gives a reason for a new
+order: test pads for 3V3 and VIN_PROT on the back; RT1/RT2 as 1206 with room to
+hand-solder; an unpopulated 1.27 mm header footprint instead of the pogo pads;
+and, only if the cranking measurement shows reboots, a regulator with a lower
+minimum input.

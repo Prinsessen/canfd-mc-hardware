@@ -412,6 +412,13 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-si
   <li><strong>Cranking dip:</strong> UVLO releases at 6.5 V; a cold crank can dip below that and reboot the board (the wake path tolerates it). Measure the dip during cranking before rev 1.1 is frozen. If it matters, the fix is a regulator with a lower minimum input, not a bigger capacitor.</li>
   <li><strong>One-ground rule:</strong> flashing over the USB pads must happen with the board off the bike, or from a laptop on battery — a mains-powered PC's USB ground to the bike's ground is the one case the dropped isolation would have covered.</li>
 </ul>
+<p><strong>Candidate board changes for rev 1.1</strong> — none justify a new order on their own; take them along when the bench gives a reason:</p>
+<ul>
+  <li>Test pads for <code>+3V3</code> and <code>VIN_PROT</code> on the back, next to the flash pads — measuring on 0603 capacitor pads is a poor way to debug on a bike.</li>
+  <li>RT1/RT2 as 1206 with more room around them: they are fitted and removed by hand for bench testing.</li>
+  <li>An unpopulated 1.27 mm header footprint (or wider pads) in place of the pogo pads, so a header can be press-fitted for the first flash without a fixture.</li>
+  <li>If the cranking measurement shows reboots: a regulator with a lower minimum input (LM5163 / LM61460 class) or a lower UVLO — a schematic change, so wait for the measurement.</li>
+</ul>
 
 <h2 id="s8"><span class="num">8</span>Sources</h2>
 <ul class="src">
