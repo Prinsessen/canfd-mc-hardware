@@ -70,8 +70,11 @@ be made with JLCPCB's standard via option.
    If it will not enter the bootloader on its own: hold `IO0` low, pulse `EN`
    low, release `IO0`. A 3.3 V USB-TTL adapter on `TX`/`RX` works as a fallback,
    but with `ARDUINO_USB_CDC_ON_BOOT=1` the serial log only appears on USB.
-3. Bench CAN against a USB-CAN adapter needs termination at both ends — fit two
-   60.4 Ω on RT1/RT2 *temporarily*, and remove them before the bike.
+3. Bench CAN against a USB-CAN adapter needs termination at both ends. Easiest:
+   a 120 Ω resistor across CANH/CANL at the adapter end (or the adapter's own
+   termination switch) and a second 120 Ω clipped across P3/P4 — no soldering on
+   the board. RT1/RT2 (2 × 60.4 Ω) are the on-board alternative; if you fit them,
+   remove them before the bike.
 4. On the bike: the 60 Ω check across CAN H/CAN L with the ignition off, as in
    the firmware repo's FLASHING.md, before the board is connected.
 5. Solder the four wires (through the relief holes first), the antenna pigtail,
