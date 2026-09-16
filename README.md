@@ -26,6 +26,7 @@ production/                                    what JLCPCB was sent: Gerber zip,
 docs/design-document.html                      the full design document: BOM, net list, the
                                                LM5164 calculation, layout rules, checklist
 docs/BUILD-NOTES.md                            build, ordering and bring-up notes
+docs/WIRING-PARTS.md                           antenna and service-connector cable to order
 ```
 
 ## Connections
