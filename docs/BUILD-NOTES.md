@@ -55,10 +55,31 @@ be made with JLCPCB's standard via option.
   and the U.FL connector, all of which you need bare until after bring-up.
 - **Parts:** all 26 lines match on LCSC. If something is out of stock, take the
   suggested substitute for passives, not for U1–U4, X1, L1, L2.
-- **Placement:** JLCPCB's rotation convention differs from KiCad's for SOIC
-  packages; U2 and U4 needed a 90° turn in their viewer. Check pin 1 of U1–U4,
-  D1 (cathode towards C1), D3 and L1 against the silkscreen marks on the
-  engineer's confirmation image before approving.
+- **Placement:** JLCPCB's zero-rotation is defined per part in *their* library,
+  not per package, so the CPL rotations KiCad exports do not match theirs for
+  several parts. Their engineer corrects this and then asks for a *Confirm
+  Parts Placement*. Expect it; it is not a fault in the layout. See the
+  checklist below for what to verify before clicking Yes.
+
+### Placement confirmation checklist (verified for rev 1.0, 2026-09-18)
+
+The layout is the reference — every item below was checked pad-for-pad against
+`canfd-mc.kicad_pcb` and JLCPCB's corrected placement matched it. Only these
+six parts have an orientation that can be wrong; everything else is symmetric.
+
+| Part | Correct orientation on the board | How to see it in JLCPCB's viewer |
+|---|---|---|
+| U1 ESP32-S3-WROOM-1U | U.FL connector towards the **left** board edge; pads along top, right, bottom | Round U.FL in the top-left corner of the module |
+| U2 MCP2518FD (SOIC-14) | Pin 1 **top-left**, body vertical | Pin-1 dot next to the silkscreen triangle, nearest X1 |
+| U4 TCAN332 (SOIC-8) | Pin 1 **top-left**, body vertical, below U2 | Pin-1 dot towards U2 |
+| U3 LM5164 (SOIC-8 PowerPAD) | Pin 1 **top-right**; pins 1–4 (GND/VIN/EN/RON) towards C1/D2, pins 5–8 towards L2 | Pin-1 dot in the top-right corner |
+| D1 SS36 (SMA) | **Anode (+) towards F1 at the top, cathode towards C1/U3 at the bottom** — pad 1 = cathode = VIN_PROT at the lower pad | Their symbol: "+" at the top, diode bar at the bottom |
+| D3 PESD2CAN (SOT-23) | **One pin down** towards the CANH/CANL pads (pin 3, GND), two pins up towards L1 | Pins 1 and 2 are interchangeable (both CAN lines) |
+
+Cannot be wrong by construction: D2 (bidirectional TVS), L1/L2/X1/F1 and all
+R/C (symmetric). If anything in the table does not match, use the viewer's
+rotate button on that part (or answer *No, modification needed* and say which
+part), never change the KiCad file to match JLCPCB.
 - Shipping DDP if offered — the value is above the EU 150 € threshold, and DDP
   avoids the courier's import-handling fee at the door.
 
